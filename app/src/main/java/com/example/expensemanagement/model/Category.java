@@ -1,19 +1,29 @@
 package com.example.expensemanagement.model;
 
-import java.util.ArrayList;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "my_category")
 public class Category {
+    @PrimaryKey(autoGenerate = true)
+    private int categoryId;
+
+    @ColumnInfo(name = "category_name")
     private String categoryName;
-    private String categoryId;
-    private ArrayList<Money> listMoney;
+
+    @ColumnInfo(name = "category_img")
+    private int categoryImg;
+    @ColumnInfo(name = "income")
     private boolean income;         //income: true, expense: false
+
     public Category() {
     }
 
-    public Category(String categoryName, String categoryId, ArrayList<Money> listMoney, boolean income) {
-        this.categoryName = categoryName;
+    public Category(int categoryId, String categoryName, int categoryImg, boolean income) {
         this.categoryId = categoryId;
-        this.listMoney = listMoney;
+        this.categoryName = categoryName;
+        this.categoryImg = categoryImg;
         this.income = income;
     }
 
@@ -29,23 +39,23 @@ public class Category {
         return categoryName;
     }
 
-    public ArrayList<Money> getListMoney() {
-        return listMoney;
-    }
-
-    public void setListMoney(ArrayList<Money> listMoney) {
-        this.listMoney = listMoney;
-    }
-
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 
-    public String getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public int getCategoryImg() {
+        return categoryImg;
+    }
+
+    public void setCategoryImg(int categoryImg) {
+        this.categoryImg = categoryImg;
     }
 }

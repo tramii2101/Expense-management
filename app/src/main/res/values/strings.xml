@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Quản lý chi tiêu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tien_chi">Tiền chi</string>
+    <string name="tien_thu">Tiền thu</string>
+    <string name="date">Ngày</string>
+    <string name="note">Ghi chú</string>
+    <string name="amount">Số tiền</string>
+    <string name="verify">Xác nhận</string>
 </resources>
