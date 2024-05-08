@@ -1,5 +1,6 @@
 package com.example.expensemanagement.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -15,6 +16,9 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
     List<Category> listCategory = new ArrayList<>();
     private OnClickItemListener onClickItemListener;
+
+    public CategoryAdapter() {
+    }
 
     public CategoryAdapter(List<Category> listCategory) {
         this.listCategory = listCategory;
@@ -46,7 +50,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public int getItemCount() {
-        return 0;
+        return listCategory.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateListData(List<Category> newList) {
+        listCategory.clear();
+        listCategory = newList;
+        notifyDataSetChanged();
     }
 
     public void setOnClickItemListener(OnClickItemListener onClickItemListener) {
@@ -64,6 +75,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             super(b.getRoot());
             binding = b;
         }
+
 
         void bindData(Category category) {
             binding.ivCategory.setImageResource(category.getCategoryImg());

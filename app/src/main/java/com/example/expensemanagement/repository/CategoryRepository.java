@@ -10,24 +10,31 @@ import com.example.expensemanagement.room_db.CategoryRoomDatabase;
 
 import java.util.List;
 
-class CategoryRepository {
+public class CategoryRepository {
     private CategoryDAO categoryDAO;
-    private LiveData<List<Category>> listCategory;
+//    private LiveData<List<Category>> listCategory;
 
     public CategoryRepository(Application application) {
         CategoryRoomDatabase db = CategoryRoomDatabase.getCategoryRoomDatabase(application);
         categoryDAO = db.categoryDAO();
-        listCategory = categoryDAO.getAllCategory();
     }
 
-    void insert(Category category) {
+    public void insert(Category category) {
         CategoryRoomDatabase.databaseWriteExecutor.execute(() -> {
             categoryDAO.insertCategory(category);
         });
     }
 
-
     public LiveData<List<Category>> getListCategory() {
-        return listCategory;
+        return categoryDAO.getAllCategory();
     }
+
+    public LiveData<List<Category>> getListExpense() {
+        return categoryDAO.getExpenseCategory();
+    }
+
+    public LiveData<List<Category>> getListIncome() {
+        return categoryDAO.getIncomeCategory();
+    }
+
 }

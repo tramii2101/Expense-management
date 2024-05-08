@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_input"
+        android:id="@+id/action_home"
         android:enabled="true"
         android:icon="@drawable/ic_pencil"
         android:iconTint="@color/color_icon"
         android:title=""
          />
     <item
-        android:id="@+id/action_view_calendar"
+        android:id="@+id/action_calendar"
         android:enabled="true"
         android:icon="@drawable/ic_calendar"
         android:iconTint="@color/color_icon"
         android:title=""
          />
     <item
-        android:id="@+id/action_view_chart"
+        android:id="@+id/action_chart"
         android:enabled="true"
         android:icon="@drawable/ic_chart"
         android:iconTint="@color/color_icon"

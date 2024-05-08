@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "my_category")
 public class Category {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "category_id")
     private int categoryId;
 
     @ColumnInfo(name = "category_name")
@@ -22,6 +23,12 @@ public class Category {
 
     public Category(int categoryId, String categoryName, int categoryImg, boolean income) {
         this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.categoryImg = categoryImg;
+        this.income = income;
+    }
+
+    public Category(String categoryName, int categoryImg, boolean income) {
         this.categoryName = categoryName;
         this.categoryImg = categoryImg;
         this.income = income;

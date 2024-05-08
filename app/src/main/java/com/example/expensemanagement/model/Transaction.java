@@ -1,45 +1,38 @@
 package com.example.expensemanagement.model;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.example.expensemanagement.utils.common.Converters;
+import com.example.expensemanagement.utils.converter.DateConverter;
 
 import java.util.Date;
 
-@TypeConverters({Converters.class})
-@Entity(tableName = "my_transaction", foreignKeys = @ForeignKey(
-        entity = Category.class,
-        childColumns = "category_id",
-        parentColumns = "categoryId"
-))
+@TypeConverters({DateConverter.class})
+@Entity(tableName = "my_transaction")
 public class Transaction {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "transaction_id")
     private int transactionId;
-    @ColumnInfo(name = "transaction_name")
-    private String transactionName;
     @ColumnInfo(name = "amount")
     private int amount;
     @ColumnInfo(name = "transaction_date")
     private Date transactionDate;
     @ColumnInfo(name = "note")
     private String note;
-    @ColumnInfo(name = "category_id")
-    private int category_id;
+    @Embedded
+    private Category category;
 
-    public Transaction() {
-    }
-
-    public Transaction(int transactionId, String transactionName, int amount, Date transactionDate, String note, int category_id) {
-        this.transactionId = transactionId;
-        this.transactionName = transactionName;
+    public Transaction(int amount, Date transactionDate, String note, Category category) {
         this.amount = amount;
         this.transactionDate = transactionDate;
         this.note = note;
-        this.category_id = category_id;
+        this.category = category;
+    }
+
+    public Transaction() {
     }
 
     public int getTransactionId() {
@@ -48,14 +41,6 @@ public class Transaction {
 
     public void setTransactionId(int transactionId) {
         this.transactionId = transactionId;
-    }
-
-    public String getTransactionName() {
-        return transactionName;
-    }
-
-    public void setTransactionName(String transactionName) {
-        this.transactionName = transactionName;
     }
 
     public int getAmount() {
@@ -82,11 +67,11 @@ public class Transaction {
         this.note = note;
     }
 
-    public int getCategory_id() {
-        return category_id;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
