@@ -3,7 +3,7 @@ package com.example.expensemanagement.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.expensemanagement.model.TransactionInformation;
+import com.example.expensemanagement.model.Transaction;
 import com.example.expensemanagement.repository.TransactionRepository;
 
 import java.util.Date;
@@ -25,11 +25,15 @@ public class TransactionCalendarViewModel extends ViewModel {
 //        transactionByDay = repository.getTransactionByDay(date);
 //    }
 
-    public LiveData<List<TransactionInformation>> getTransactionByMonth(Date date) {
+    public LiveData<List<Transaction>> getTransactionByMonth(Date date) {
         return repository.getTransactionByMonth(date);
     }
 
-    public LiveData<List<TransactionInformation>> getTransactionByDay(Date date) {
+    public LiveData<List<Transaction>> getTransactionByDay(Date date) {
         return repository.getTransactionByDay(date);
+    }
+
+    public int deleteTransaction(Transaction transaction) {
+        return repository.deleteTransaction(transaction);
     }
 }

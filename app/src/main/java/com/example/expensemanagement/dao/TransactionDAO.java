@@ -2,12 +2,12 @@ package com.example.expensemanagement.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.expensemanagement.model.Transaction;
-import com.example.expensemanagement.model.TransactionInformation;
 
 import java.util.List;
 
@@ -28,8 +28,8 @@ public interface TransactionDAO {
     @Query("SELECT * FROM my_transaction INNER JOIN my_category ON my_transaction.category_id = my_category.category_id WHERE my_category.income = 0")
     LiveData<List<Transaction>> getAllIncome();
 
-    @Query("SELECT category_img, category_name, amount, transaction_date, note, income FROM my_transaction WHERE strftime('%Y-%m', :date) = strftime('%Y-%m', :date) GROUP BY :date")
-    LiveData<List<TransactionInformation>> getTransactionByMonth(String date);
+    @Query("SELECT * FROM my_transaction WHERE strftime('%Y-%m', :date) = strftime('%Y-%m', :date) GROUP BY :date")
+    LiveData<List<Transaction>> getTransactionByMonth(String date);
 
     @Query("SELECT SUM(amount) FROM my_transaction WHERE strftime('%Y-%m', :date) = strftime('%Y-%m', :date) AND income = 1")
     LiveData<Long> getTotalIncomeByMonth(String date);
@@ -37,10 +37,15 @@ public interface TransactionDAO {
     @Query("SELECT SUM(amount) FROM my_transaction WHERE strftime('%Y-%m', :date) = strftime('%Y-%m', :date) AND income = 1")
     LiveData<Long> getTotalExpenseByMonth(String date);
 
-    @Query("SELECT category_img, category_name, amount, transaction_date, note, income FROM my_transaction WHERE date(transaction_date) = :date")
-    LiveData<List<TransactionInformation>> getTransactionByDate(String date);
+    @Query("SELECT * FROM my_transaction WHERE date(transaction_date) = :date")
+    LiveData<List<Transaction>> getTransactionByDate(String date);
 
     @Query("SELECT SUM(amount) FROM my_transaction WHERE date(transaction_date) = :date")
     LiveData<Long> getIncomeByDate(String date);
 
+    @Delete
+    void deleteTransaction(Transaction transaction);
+
+    @Query("SELECT * FROM my_transaction WHERE transaction_id = :id")
+    LiveData<Transaction> getTransactionById(int id);
 }

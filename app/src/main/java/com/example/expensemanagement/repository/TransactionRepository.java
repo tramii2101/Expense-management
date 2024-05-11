@@ -1,11 +1,11 @@
 package com.example.expensemanagement.repository;
 
 import android.app.Application;
+
 import androidx.lifecycle.LiveData;
 
 import com.example.expensemanagement.dao.TransactionDAO;
 import com.example.expensemanagement.model.Transaction;
-import com.example.expensemanagement.model.TransactionInformation;
 import com.example.expensemanagement.room_db.TransactionRoomDatabase;
 import com.example.expensemanagement.utils.Constant;
 
@@ -39,11 +39,11 @@ public class TransactionRepository {
         });
     }
 
-    public LiveData<List<TransactionInformation>> getTransactionByDay(Date date) {
+    public LiveData<List<Transaction>> getTransactionByDay(Date date) {
         return transactionDAO.getTransactionByDate(Constant.FORMAT.format(date));
     }
 
-    public LiveData<List<TransactionInformation>> getTransactionByMonth(Date date) {
+    public LiveData<List<Transaction>> getTransactionByMonth(Date date) {
         return transactionDAO.getTransactionByMonth(Constant.FORMAT.format(date));
     }
 
@@ -53,5 +53,16 @@ public class TransactionRepository {
 
     public LiveData<Long> getTotalExpenseByMonth(Date date) {
         return transactionDAO.getTotalExpenseByMonth(Constant.FORMAT.format(date));
+    }
+
+    public int deleteTransaction(Transaction transaction) {
+        TransactionRoomDatabase.databaseWriteExecutor.execute(() -> {
+            transactionDAO.deleteTransaction(transaction);
+        });
+        return 0;
+    }
+
+    public LiveData<Transaction> getTransactionById(int id) {
+        return transactionDAO.getTransactionById(id);
     }
 }
