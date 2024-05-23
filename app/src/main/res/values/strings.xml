@@ -8,4 +8,11 @@
     <string name="note">Ghi chú</string>
     <string name="amount">Số tiền</string>
     <string name="verify">Xác nhận</string>
+    <string name="thu_chi">Thu - chi</string>
+    <string name="tong_thu">Tổng thu</string>
+    <string name="tong_chi">Tổng chi</string>
+    <string name="chi">Chi</string>
+    <string name="thu">Thu</string>
+    <string name="lich">Lịch</string>
+    <string name="giao_dich">Giao dịch</string>
 </resources>

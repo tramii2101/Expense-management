@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
     static List<Category> listExpense = new ArrayList<>();
     static List<Category> listIncome = new ArrayList<>();
     //    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    Category category;
+    Category category = new Category();
     private FragmentHomeBinding binding;
     private DatePickerDialog datePickerDialog;
     private CategoryViewModel categoryViewModel;
@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    void initView() {
+    void initView(){
         // init value for view model
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         binding.tvExpense.setSelected(true);// init first state is expense
@@ -111,7 +111,7 @@ public class HomeFragment extends Fragment {
 
     void handleEvent() {
         binding.tvExpense.setOnClickListener(v -> {
-            // change color of btn income, btn expense
+            // change color of btn income, btn expense when click
             v.setSelected(true);
             binding.tvIncome.setSelected(false);
 

@@ -48,4 +48,22 @@ public interface TransactionDAO {
 
     @Query("SELECT * FROM my_transaction WHERE transaction_id = :id")
     LiveData<Transaction> getTransactionById(int id);
+
+    @Query("SELECT SUM(amount) FROM my_transaction WHERE income = 1 AND transaction_date BETWEEN :startDate AND :endDate")
+    LiveData<Long> getTotalIncomeBetweenDates(String startDate, String endDate);
+
+    @Query("SELECT SUM(amount) FROM my_transaction WHERE income = 0 AND transaction_date BETWEEN :startDate AND :endDate")
+    LiveData<Long> getTotalExpenseBetweenDates(String startDate, String endDate);
+
+    @Query("SELECT * FROM my_transaction WHERE transaction_date BETWEEN :startDate AND :endDate AND category_id = :categoryId")
+    LiveData<List<Transaction>> getTransactionsByCategoryBetweenDates(String startDate, String endDate, int categoryId);
+
+    @Query("SELECT SUM(amount) FROM my_transaction WHERE (transaction_date BETWEEN :startDate AND :endDate) AND category_name = :categoryName")
+    LiveData<Long> getTotalAmountByCategoryBetweenDates(String startDate, String endDate, String categoryName);
+
+    @Query("SELECT * FROM my_transaction WHERE (transaction_date BETWEEN :startDate AND :endDate) AND income = 1")
+    LiveData<List<Transaction>> getInComeBetweenDates(String startDate, String endDate);
+
+    @Query("SELECT * FROM my_transaction WHERE (transaction_date BETWEEN :startDate AND :endDate) AND income = 0")
+    LiveData<List<Transaction>> getExpenseBetweenDates(String startDate, String endDate);
 }

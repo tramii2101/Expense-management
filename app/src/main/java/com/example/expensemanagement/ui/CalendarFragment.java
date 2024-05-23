@@ -25,7 +25,6 @@ import com.example.expensemanagement.viewmodel.TransactionCalendarViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class CalendarFragment extends Fragment {
     private TransactionAdapter adapter;
     private DialogTransactionDetailBinding detailBinding;
     private List<Transaction> transactionList = new ArrayList<>();
-    int currentMonth;
+//    int currentMonth;
 
     private Dialog detailDialog;
 
@@ -44,7 +43,7 @@ public class CalendarFragment extends Fragment {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(TransactionCalendarViewModel.class);
         adapter = new TransactionAdapter(transactionList);
-        if (transactionList == null) {
+        if (transactionList == null || !transactionList.isEmpty()) {
             viewModel.getTransactionByMonth(new Date()).observe(getViewLifecycleOwner(), transactionList -> {
                 if (transactionList != null) {
                     adapter.setListTransaction(transactionList);
@@ -54,7 +53,7 @@ public class CalendarFragment extends Fragment {
         } else {
             adapter.setListTransaction(transactionList);
         }
-        currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+//        currentMonth = Calendar.getInstance().get(Calendar.MONTH);
     }
 
     @Override
@@ -80,6 +79,7 @@ public class CalendarFragment extends Fragment {
         detailDialog.getWindow().setBackgroundDrawable(new ColorDrawable(
                 Color.TRANSPARENT
         ));
+        detailBinding = DialogTransactionDetailBinding.inflate(getLayoutInflater());
         detailDialog.setContentView(detailBinding.getRoot());
         detailDialog.setCancelable(true);
         detailDialog.setCanceledOnTouchOutside(true);
@@ -93,7 +93,7 @@ public class CalendarFragment extends Fragment {
         // Get list transaction by day
         binding.calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             viewModel.getTransactionByDay(new Date(dayOfMonth, month, year)).observe(getViewLifecycleOwner(), transactionList -> {
-                if (transactionList != null) {
+                if (transactionList != null && !transactionList.isEmpty()) {
                     adapter.updateData(transactionList);
                     this.transactionList = transactionList;
                 }
@@ -110,6 +110,7 @@ public class CalendarFragment extends Fragment {
         });
     }
 
+    /// Swipe to delete transaction in recyclerview
     void setUpSwipeItem() {
         ItemTouchHelper.SimpleCallback touchHelperCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
@@ -130,7 +131,7 @@ public class CalendarFragment extends Fragment {
                     @Override
                     public void onDismissed(Snackbar snackbar, int event) {
                         super.onDismissed(snackbar, event);
-                        // If snackbar is dismissed by its, remove transaction from database
+                        // If snack bar is dismissed by its, remove transaction from database
                         if (event == DISMISS_EVENT_TIMEOUT) {
                             viewModel.deleteTransaction(transaction);
                         }

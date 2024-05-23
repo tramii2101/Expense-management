@@ -25,6 +25,7 @@ public class TransactionViewModel extends AndroidViewModel {
         return repository.insert(transaction);
     }
 
-
-
+    public LiveData<List<Transaction>> getAllTransaction() {
+        return allTransaction;
+    }
 }

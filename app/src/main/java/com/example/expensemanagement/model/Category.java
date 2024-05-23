@@ -9,10 +9,8 @@ public class Category {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "category_id")
     private int categoryId;
-
     @ColumnInfo(name = "category_name")
     private String categoryName;
-
     @ColumnInfo(name = "category_img")
     private int categoryImg;
     @ColumnInfo(name = "income")

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="16dp"
     tools:context=".ui.CalendarFragment">
 
     <CalendarView
@@ -24,9 +26,9 @@
         <TextView
             android:id="@+id/tv_from"
             android:layout_width="0dp"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             app:drawableStartCompat="@drawable/ic_calendar" />
 
         <TextView
@@ -36,18 +38,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="4dp"
-            app:drawableStartCompat="@drawable/ic_calendar"/>
+            app:drawableStartCompat="@drawable/ic_calendar" />
     </LinearLayout>
-
-
-    <!--    <com.example.expensemanagement.ui.custom.CustomCalendarView-->
-    <!--        android:id="@+id/calendar_view"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:background="@color/white"-->
-    <!--        android:dateTextAppearance="@style/CalenderViewDateCustomText"-->
-    <!--        android:theme="@style/CalenderViewCustom"-->
-    <!--        android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_list_transaction"

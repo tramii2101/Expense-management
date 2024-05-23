@@ -12,9 +12,7 @@
         android:id="@+id/nav_host"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="12"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"/>
+        android:layout_weight="12"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav"

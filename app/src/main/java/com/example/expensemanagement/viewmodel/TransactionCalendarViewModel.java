@@ -1,7 +1,10 @@
 package com.example.expensemanagement.viewmodel;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.expensemanagement.model.Transaction;
 import com.example.expensemanagement.repository.TransactionRepository;
@@ -9,14 +12,17 @@ import com.example.expensemanagement.repository.TransactionRepository;
 import java.util.Date;
 import java.util.List;
 
-public class TransactionCalendarViewModel extends ViewModel {
+public class TransactionCalendarViewModel extends AndroidViewModel {
     private TransactionRepository repository;
+
+    public TransactionCalendarViewModel(@NonNull Application application) {
+        super(application);
+        repository = new TransactionRepository(application);
+    }
 //    private LiveData<List<TransactionInformation>> transactionByMonth;
 //    private LiveData<List<TransactionInformation>> transactionByDay;
 
-    public TransactionCalendarViewModel() {
 
-    }
 //    public void setTransactionByMonth(Date date) {
 //        transactionByMonth = repository.getTransactionByMonth(date);
 //    }

@@ -65,4 +65,21 @@ public class TransactionRepository {
     public LiveData<Transaction> getTransactionById(int id) {
         return transactionDAO.getTransactionById(id);
     }
+
+    public LiveData<Long> getTotalIncomeBetweenDates(String startDate, String endDate) {
+        return transactionDAO.getTotalIncomeBetweenDates(startDate, endDate);
+    }
+
+    public LiveData<Long> getTotalExpenseBetweenDates(String startDate, String endDate) {
+        return transactionDAO.getTotalExpenseBetweenDates(startDate, endDate);
+    }
+
+
+    public LiveData<List<Transaction>> getIncomeBetweenDates(String startDate, String endDate) {
+        return transactionDAO.getInComeBetweenDates(startDate, endDate);
+    }
+
+    public LiveData<List<Transaction>> getExpenseBetweenDates(String startDate, String endDate) {
+        return transactionDAO.getExpenseBetweenDates(startDate, endDate);
+    }
 }
