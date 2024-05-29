@@ -12,7 +12,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         android:weightSum="2">
@@ -37,11 +36,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginStart="4dp"
             android:layout_weight="1"
             android:background="@drawable/bg_common"
             android:gravity="center"
             android:paddingVertical="8dp"
             android:textColor="@color/boulder"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_common"
+            android:backgroundTint="@color/light_salmon_pink"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:text="@string/filter"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -59,6 +73,7 @@
             android:layout_weight="1"
             android:background="@drawable/bg_common"
             android:orientation="horizontal"
+            android:paddingHorizontal="4dp"
             android:paddingVertical="8dp"
             android:weightSum="2">
 
@@ -80,13 +95,12 @@
         </LinearLayout>
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
             android:layout_weight="1"
             android:background="@drawable/bg_common"
             android:orientation="horizontal"
+            android:paddingHorizontal="4dp"
             android:paddingVertical="8dp"
             android:weightSum="2">
 
@@ -130,6 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="end"
+            android:paddingEnd="4dp"
             android:textColor="@color/topaz"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -137,8 +152,8 @@
 
     <com.example.expensemanagement.ui.custom.DoughnutChartView
         android:id="@+id/percent_chart"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:background="#FFFFFF" />
@@ -148,6 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
+        android:background="@drawable/bg_category"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -185,6 +201,7 @@
             android:gravity="center_vertical|end">
 
             <ImageView
+                android:id="@+id/iv"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
@@ -204,12 +221,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.example.expensemanagement.ui.custom.BarChartView
-        android:id="@+id/bar_chart"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_category"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginVertical="16dp" />
-
+        android:layout_marginTop="16dp"
+        tools:listitem="@layout/item_category_amount" />
 
 </LinearLayout>

@@ -18,6 +18,7 @@ import com.example.expensemanagement.model.Transaction;
 import com.example.expensemanagement.utils.OnBottomNavVisibilityListener;
 import com.example.expensemanagement.viewmodel.ListTransactionViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListTransactionFragment extends Fragment {
@@ -25,9 +26,9 @@ public class ListTransactionFragment extends Fragment {
 
     private ListTransactionViewModel viewModel;
 
-    private List<Transaction> transactions;
+    private List<Transaction> transactions = new ArrayList<>();
 
-    private TransactionAdapter adapter;
+    private TransactionAdapter adapter = new TransactionAdapter(transactions);
 
     private OnBottomNavVisibilityListener listener;
 
@@ -71,14 +72,14 @@ public class ListTransactionFragment extends Fragment {
                 viewModel.getIncomeBetweenDates(startDate, endDate).observe(getViewLifecycleOwner(), transactions -> {
                     if (transactions != null) {
                         this.transactions = transactions;
-                        adapter.setListTransaction(transactions);
+                        adapter.updateData(transactions);
                     }
                 });
             } else {
                 viewModel.getExpensesBetweenDates(startDate, endDate).observe(getViewLifecycleOwner(), transactions -> {
                     if (transactions != null) {
                         this.transactions = transactions;
-                        adapter.setListTransaction(transactions);
+                        adapter.updateData(transactions);
                     }
                 });
             }
@@ -87,7 +88,7 @@ public class ListTransactionFragment extends Fragment {
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
     }
@@ -96,11 +97,6 @@ public class ListTransactionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         listener.onBottomNavVisibilityChanged(true);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
 }

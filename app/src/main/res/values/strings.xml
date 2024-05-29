@@ -15,4 +15,5 @@
     <string name="thu">Thu</string>
     <string name="lich">Lịch</string>
     <string name="giao_dich">Giao dịch</string>
+    <string name="filter">Lọc</string>
 </resources>

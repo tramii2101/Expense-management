@@ -19,27 +19,19 @@ public class TransactionCalendarViewModel extends AndroidViewModel {
         super(application);
         repository = new TransactionRepository(application);
     }
-//    private LiveData<List<TransactionInformation>> transactionByMonth;
-//    private LiveData<List<TransactionInformation>> transactionByDay;
-
-
-//    public void setTransactionByMonth(Date date) {
-//        transactionByMonth = repository.getTransactionByMonth(date);
-//    }
-//
-//    public void setTransactionByDay(Date date) {
-//        transactionByDay = repository.getTransactionByDay(date);
-//    }
-
     public LiveData<List<Transaction>> getTransactionByMonth(Date date) {
         return repository.getTransactionByMonth(date);
     }
 
-    public LiveData<List<Transaction>> getTransactionByDay(Date date) {
+    public LiveData<List<Transaction>> getTransactionByDay(String date) {
         return repository.getTransactionByDay(date);
     }
 
     public int deleteTransaction(Transaction transaction) {
         return repository.deleteTransaction(transaction);
+    }
+
+    public LiveData<List<Transaction>> getTransactionBetweenDates(String startDate, String endDate) {
+        return repository.getTransactionBetweenDates(startDate, endDate);
     }
 }

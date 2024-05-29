@@ -18,6 +18,7 @@ import com.example.expensemanagement.utils.OnBottomNavVisibilityListener;
 public class MainActivity extends AppCompatActivity implements OnBottomNavVisibilityListener {
     private ActivityMainBinding binding;
 
+    private String thisFragment = "HomeFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,19 @@ public class MainActivity extends AppCompatActivity implements OnBottomNavVisibi
         setCurrentFragment(new HomeFragment());
         binding.nav.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.action_home) {
-                setCurrentFragment(new HomeFragment());
+                if (!"HomeFragment".equals(thisFragment)) {
+                    setCurrentFragment(new HomeFragment());
+                }
             } else if (item.getItemId() == R.id.action_calendar) {
-                setCurrentFragment(new CalendarFragment());
+                if (!"CalendarFragment".equals(thisFragment)) {
+                    setCurrentFragment(new CalendarFragment());
+                    thisFragment = "CalendarFragment";
+                }
             } else if (item.getItemId() == R.id.action_chart) {
-                setCurrentFragment(new ChartFragment());
+                if (!"ChartFragment".equals(thisFragment)) {
+                    setCurrentFragment(new ChartFragment());
+                    thisFragment = "ChartFragment";
+                }
             }
 
             return true;

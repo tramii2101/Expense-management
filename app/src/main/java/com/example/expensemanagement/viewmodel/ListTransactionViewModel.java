@@ -30,5 +30,4 @@ public class ListTransactionViewModel extends AndroidViewModel {
         incomeBetweenDates = transactionRepository.getIncomeBetweenDates(startDate, endDate);
         return incomeBetweenDates;
     }
-
 }

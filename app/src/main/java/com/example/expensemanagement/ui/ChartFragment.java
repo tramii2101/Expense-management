@@ -7,17 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.expensemanagement.R;
+import com.example.expensemanagement.adapter.CategoryWithAmountAdapter;
 import com.example.expensemanagement.databinding.FragmentChartBinding;
+import com.example.expensemanagement.model.CategoryWithAmount;
 import com.example.expensemanagement.utils.Constant;
+import com.example.expensemanagement.utils.converter.MoneyConverter;
 import com.example.expensemanagement.viewmodel.ChartViewModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ChartFragment extends Fragment {
     FragmentChartBinding binding;
@@ -28,11 +35,9 @@ public class ChartFragment extends Fragment {
     long[] sum = new long[2];       // sum[0] = totalExpense; sum[1] = totalIncome
     String startDate;
     String endDate;
+    List<CategoryWithAmount> categoryWithAmount = new ArrayList<>();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    CategoryWithAmountAdapter adapter = new CategoryWithAmountAdapter(categoryWithAmount);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +55,13 @@ public class ChartFragment extends Fragment {
         handleEvent();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getExpense(startDate, endDate);
+        getIncome(startDate, endDate);
+        getTotalByCategory();
+    }
 
     void initData() {
         sum[0] = totalIncome;
@@ -63,21 +75,20 @@ public class ChartFragment extends Fragment {
         startDate = Constant.FORMAT.format(start);
         getExpense(startDate, endDate);
         getIncome(startDate, endDate);
+        getTotalByCategory();
     }
 
     void initView() {
         int[] color = {getResources().getColor(R.color.light_red, null), getResources().getColor(R.color.green, null)};
         binding.percentChart.setData(sum);
         binding.percentChart.setColors(color);
-
-        binding.barChart.setColors(color);
-        binding.barChart.setData(sum);
-
-        binding.tvIncome.setText(String.valueOf(totalIncome));
-        binding.tvExpense.setText(String.valueOf(totalExpense));
-        binding.tvBalance.setText(String.valueOf(totalIncome - totalExpense));
+        binding.tvIncome.setText(MoneyConverter.convertMoneyToString(totalIncome));
+        binding.tvExpense.setText(MoneyConverter.convertMoneyToString(totalExpense));
+        binding.tvBalance.setText(MoneyConverter.convertMoneyToString(totalIncome - totalExpense));
         binding.tvFrom.setText(startDate);
         binding.tvTo.setText(endDate);
+        binding.rcvCategory.setAdapter(adapter);
+        binding.rcvCategory.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
     void handleEvent() {
@@ -89,10 +100,8 @@ public class ChartFragment extends Fragment {
                 datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        startDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                        startDate = dayOfMonth + "-" + (month + 1) + "-" + year;
                         binding.tvFrom.setText(startDate);
-                        getExpense(startDate, endDate);
-                        getIncome(startDate, endDate);
                     }
                 });
             }
@@ -106,10 +115,8 @@ public class ChartFragment extends Fragment {
                 datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        endDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                        endDate = dayOfMonth + "-" + (month + 1) + "-" + year;
                         binding.tvTo.setText(endDate);
-                        getExpense(startDate, endDate);
-                        getIncome(startDate, endDate);
                     }
                 });
             }
@@ -124,7 +131,6 @@ public class ChartFragment extends Fragment {
                 bundle.putString("endDate", startDate);
                 ListTransactionFragment incomeFragment = new ListTransactionFragment();
                 incomeFragment.setArguments(bundle);
-
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host, incomeFragment).commit();
             }
         });
@@ -143,21 +149,25 @@ public class ChartFragment extends Fragment {
             }
         });
 
+        binding.tvFilter.setOnClickListener(v -> {
+            getExpense(startDate, endDate);
+            getIncome(startDate, endDate);
+            getTotalByCategory();
+        });
 
     }
 
     void getExpense(String startDate, String endDate) {
         viewModel.getTotalExpenseBetweenDates(startDate, endDate).observe(getViewLifecycleOwner(), new Observer<Long>() {
             @Override
-            public void onChanged(Long expense) {
-                if (expense != 0) {
+            public void onChanged(@Nullable Long expense) {
+                if (expense != null && expense != 0) {
                     totalExpense = expense;
                     sum[0] = totalExpense;
                     binding.percentChart.setData(sum);
-                    binding.barChart.setData(sum);
                     balance = totalIncome - totalExpense;
-                    binding.tvExpense.setText(String.valueOf(totalExpense));
-                    binding.tvBalance.setText(String.valueOf(balance));
+                    binding.tvExpense.setText(MoneyConverter.convertMoneyToString(totalExpense));
+                    binding.tvBalance.setText(MoneyConverter.convertMoneyToString(balance));
                 }
             }
         });
@@ -166,18 +176,41 @@ public class ChartFragment extends Fragment {
     void getIncome(String startDate, String endDate) {
         viewModel.getTotalIncomeBetweenDates(startDate, endDate).observe(getViewLifecycleOwner(), new Observer<Long>() {
             @Override
-            public void onChanged(Long income) {
-                if (income != 0) {
+            public void onChanged(@Nullable Long income) {
+                if (income != null && income != 0) {
                     totalIncome = income;
                     sum[1] = totalIncome;
-                    binding.barChart.setData(sum);
                     binding.percentChart.setData(sum);
                     balance = totalIncome - totalExpense;
-                    binding.tvIncome.setText(String.valueOf(totalIncome));
-                    binding.tvBalance.setText(String.valueOf(balance));
+                    binding.tvIncome.setText(MoneyConverter.convertMoneyToString(totalIncome));
+                    binding.tvBalance.setText(MoneyConverter.convertMoneyToString(balance));
                 }
             }
         });
+    }
+
+    void getTotalByCategory() {
+        viewModel.getCategoriesWithAmountBetweenDates(startDate, endDate).observe(getViewLifecycleOwner(), new Observer<List<CategoryWithAmount>>() {
+            @Override
+            public void onChanged(List<CategoryWithAmount> categoryWithAmounts) {
+                if (categoryWithAmounts != null && !categoryWithAmounts.isEmpty()) {
+                    adapter.setList(categoryWithAmounts);
+                    categoryWithAmount = categoryWithAmounts;
+                }
+            }
+        });
+
+//        Observer observer = new Observer<List<CategoryWithAmount>>() {
+//            @Override
+//            public void onChanged(List<CategoryWithAmount> categoryWithAmounts) {
+//                if (categoryWithAmounts != null && !categoryWithAmounts.isEmpty()) {
+//                    adapter.setList(categoryWithAmounts);
+//                    categoryWithAmount = categoryWithAmounts;
+//                }
+//                viewModel.getCategoriesWithAmountBetweenDates(startDate, endDate).removeObserver(this);
+//            }
+//        };
+//        viewModel.getCategoriesWithAmountBetweenDates(startDate, endDate).observe(getViewLifecycleOwner(), observer);
     }
 
 }

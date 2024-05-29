@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.example.expensemanagement.dao.TransactionDAO;
+import com.example.expensemanagement.model.CategoryWithAmount;
 import com.example.expensemanagement.model.Transaction;
 import com.example.expensemanagement.room_db.TransactionRoomDatabase;
 import com.example.expensemanagement.utils.Constant;
@@ -39,7 +40,7 @@ public class TransactionRepository {
         });
     }
 
-    public LiveData<List<Transaction>> getTransactionByDay(Date date) {
+    public LiveData<List<Transaction>> getTransactionByDay(String date) {
         return transactionDAO.getTransactionByDate(Constant.FORMAT.format(date));
     }
 
@@ -81,5 +82,13 @@ public class TransactionRepository {
 
     public LiveData<List<Transaction>> getExpenseBetweenDates(String startDate, String endDate) {
         return transactionDAO.getExpenseBetweenDates(startDate, endDate);
+    }
+
+    public LiveData<List<Transaction>> getTransactionBetweenDates(String startDate, String endDate) {
+        return transactionDAO.getTransactionsBetweenDates(startDate, endDate);
+    }
+
+    public LiveData<List<CategoryWithAmount>> getCategoriesWithAmountBetweenDates(String startDate, String endDate) {
+        return transactionDAO.getCategoriesWithAmountBetweenDates(startDate, endDate);
     }
 }

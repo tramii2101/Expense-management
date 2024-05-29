@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    void initView(){
+    void initView() {
         // init value for view model
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         binding.tvExpense.setSelected(true);// init first state is expense
@@ -178,8 +178,8 @@ public class HomeFragment extends Fragment {
             datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    date = dayOfMonth + "-" + (month + 1) + "-" + year;
-                    binding.tvDatetime.setText(date);
+                    date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                    binding.tvDatetime.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
                 }
             });
         });

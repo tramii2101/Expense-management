@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensemanagement.databinding.ItemTransactionBinding;
 import com.example.expensemanagement.model.Transaction;
+import com.example.expensemanagement.utils.Constant;
 import com.example.expensemanagement.utils.converter.MoneyConverter;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public TransactionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return new TransactionViewHolder(ItemTransactionBinding.inflate(layoutInflater));
+        return new TransactionViewHolder(ItemTransactionBinding.inflate(layoutInflater, parent, false));
     }
 
     @Override
@@ -64,8 +65,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public void bind(Transaction item) {
             binding.tvCategoryName.setText(item.getCategory().getCategoryName());
-            binding.tvCategoryName.setCompoundDrawablesRelativeWithIntrinsicBounds(item.getCategory().getCategoryImg(), 0, 0, 0);
-            binding.tvCategoryName.setCompoundDrawablePadding(2);
+            binding.tvTransactionDay.setText(Constant.FORMAT.format(item.getTransactionDate()));
+            binding.imgCategoryIcon.setImageResource(item.getCategory().getCategoryImg());
             binding.tvAmount.setText(MoneyConverter.convertMoneyToString(item.getAmount()));
             if (item.getCategory().isIncome()) {
                 binding.tvAmount.setTextColor(binding.getRoot().getResources().getColor(android.R.color.holo_green_light));

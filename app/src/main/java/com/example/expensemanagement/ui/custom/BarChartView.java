@@ -75,7 +75,7 @@ public class BarChartView extends View {
 
         for (int i = 0; i < data.length; i++) {
             paint.setColor(colors[i]);
-            int barWidth = (int) ((data[i] / (float) maxValue) * height * 0.8); // Chiều rộng của cột
+            int barWidth = (int) ((data[i] / (float) maxValue) * height * 0.2); // Chiều rộng của cột
             int left = 0;
             int top = i * barHeight;
             int right = barWidth;

@@ -17,7 +17,7 @@ public class Transaction {
     @ColumnInfo(name = "transaction_id")
     private int transactionId;
     @ColumnInfo(name = "amount")
-    private int amount;
+    private long amount;
     @ColumnInfo(name = "transaction_date")
     private Date transactionDate;
     @ColumnInfo(name = "note")
@@ -25,7 +25,7 @@ public class Transaction {
     @Embedded
     private Category category;
 
-    public Transaction(int amount, Date transactionDate, String note, Category category) {
+    public Transaction(long amount, Date transactionDate, String note, Category category) {
         this.amount = amount;
         this.transactionDate = transactionDate;
         this.note = note;
@@ -43,11 +43,11 @@ public class Transaction {
         this.transactionId = transactionId;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 

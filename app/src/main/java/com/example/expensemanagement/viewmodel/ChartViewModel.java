@@ -6,7 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.expensemanagement.model.CategoryWithAmount;
 import com.example.expensemanagement.repository.TransactionRepository;
+
+import java.util.List;
 
 public class ChartViewModel extends AndroidViewModel {
     private TransactionRepository transactionRepository;
@@ -27,4 +30,7 @@ public class ChartViewModel extends AndroidViewModel {
         return transactionRepository.getTotalIncomeBetweenDates(startDate, endDate);
     }
 
+    public LiveData<List<CategoryWithAmount>> getCategoriesWithAmountBetweenDates(String startDate, String endDate) {
+        return transactionRepository.getCategoriesWithAmountBetweenDates(startDate, endDate);
+    }
 }
