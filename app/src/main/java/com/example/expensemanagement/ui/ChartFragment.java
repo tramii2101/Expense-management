@@ -200,17 +200,6 @@ public class ChartFragment extends Fragment {
             }
         });
 
-//        Observer observer = new Observer<List<CategoryWithAmount>>() {
-//            @Override
-//            public void onChanged(List<CategoryWithAmount> categoryWithAmounts) {
-//                if (categoryWithAmounts != null && !categoryWithAmounts.isEmpty()) {
-//                    adapter.setList(categoryWithAmounts);
-//                    categoryWithAmount = categoryWithAmounts;
-//                }
-//                viewModel.getCategoriesWithAmountBetweenDates(startDate, endDate).removeObserver(this);
-//            }
-//        };
-//        viewModel.getCategoriesWithAmountBetweenDates(startDate, endDate).observe(getViewLifecycleOwner(), observer);
     }
 
 }

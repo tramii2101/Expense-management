@@ -60,9 +60,17 @@ public class HomeFragment extends Fragment {
         initView();
         initData();
         handleEvent();
-
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.tvExpense.setSelected(true);
+        Date currentDate = new Date();
+        date = Constant.FORMAT.format(currentDate);
+        binding.tvDatetime.setText(date);
+        getListExpense();
+    }
 
     void initView() {
         // init value for view model
@@ -119,15 +127,7 @@ public class HomeFragment extends Fragment {
             if (!listExpense.isEmpty()) {
                 categoryAdapter.updateListData(listExpense);
             } else {
-                categoryViewModel.getListExpense().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
-                    @Override
-                    public void onChanged(List<Category> categories) {
-                        if (categories != null && !categories.isEmpty()) {
-                            categoryAdapter.updateListData(categories);
-                            listExpense = categories;
-                        }
-                    }
-                });
+                getListExpense();
             }
         });
 
@@ -137,15 +137,7 @@ public class HomeFragment extends Fragment {
             if (!listIncome.isEmpty()) {
                 categoryAdapter.updateListData(listIncome);
             } else {
-                categoryViewModel.getListIncome().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
-                    @Override
-                    public void onChanged(List<Category> categories) {
-                        if (categories != null && !categories.isEmpty()) {
-                            categoryAdapter.updateListData(categories);
-                            listIncome = categories;
-                        }
-                    }
-                });
+                getListIncome();
             }
         });
 
@@ -194,6 +186,30 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void getListExpense() {
+        categoryViewModel.getListExpense().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
+            @Override
+            public void onChanged(List<Category> categories) {
+                if (categories != null && !categories.isEmpty()) {
+                    categoryAdapter.updateListData(categories);
+                    listExpense = categories;
+                }
+            }
+        });
+    }
+
+    private void getListIncome() {
+        categoryViewModel.getListIncome().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
+            @Override
+            public void onChanged(List<Category> categories) {
+                if (categories != null && !categories.isEmpty()) {
+                    categoryAdapter.updateListData(categories);
+                    listIncome = categories;
+                }
+            }
+        });
+    }
+
     void insertCategory() throws ParseException {
         Log.e("id", "insertCategory: " + categoryId);
         if (binding.edtNote.getText() == null) {
@@ -213,7 +229,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         }
-
     }
 
 }

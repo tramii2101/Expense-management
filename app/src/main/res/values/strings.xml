@@ -16,4 +16,12 @@
     <string name="lich">Lịch</string>
     <string name="giao_dich">Giao dịch</string>
     <string name="filter">Lọc</string>
+    <string name="setting">Cài đặt</string>
+    <string name="report">Báo cáo</string>
+    <string name="clear_data"> Xóa dữ liệu</string>
+    <string name="edit_category">Chỉnh sửa danh mục</string>
+    <string name="clear_all_message">Bạn có chắc chắn muốn xóa toàn bộ dữ liệu không? Thao tác này không thể hoàn tác.</string>
+    <string name="add_category">Thêm danh mục</string>
+    <string name="category_name">Tên danh mục</string>
+    <string name="add">Thêm</string>
 </resources>
